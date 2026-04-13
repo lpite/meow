@@ -10,7 +10,7 @@ export function DashboardPage({sensors}:DashboardPageProps){
     <Layout>
       <h1>Sensor Dashboard</h1>
       {sensors.map((sensor)=>(
-        <SensorCard device_id={sensor.id} {...sensor}/>))}
+        <SensorCard device_id={sensor.id} {...sensor} />))}
     </Layout>
   );
 };
