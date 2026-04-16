@@ -36,7 +36,7 @@ sensorApiRoutes.post("/:id/readings", async (c) => {
   }
 
   const json = await c.req.json();
-  const { temperature, humidity, airQuality } = json;
+  const { temperature, humidity, air_quality } = json;
   await db`
     INSERT INTO sensor_readings (
       device_id,
@@ -48,7 +48,7 @@ sensorApiRoutes.post("/:id/readings", async (c) => {
       ${deviceId},
       ${temperature},
       ${humidity},
-      ${airQuality}
+      ${air_quality}
     )
   `;
   return c.json(json);

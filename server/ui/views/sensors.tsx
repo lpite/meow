@@ -4,6 +4,7 @@ import { SensorCard } from "../components/sensor-card";
 type SensorsPageProps = {
   sensors: {
     id: string;
+    name:string;
     reading: {
       temperature: number;
       air_quality: number;
@@ -21,7 +22,8 @@ export function SensorsPage({ sensors }: SensorsPageProps) {
       <div class="grid grid-cols-4 gap-3 w-full">
         {sensors.map((sensor) => (
           <SensorCard
-            device_id={sensor.id}
+            name={sensor.name}
+            id={sensor.id}
             air_quality={sensor.reading?.air_quality}
             temperature={sensor.reading?.temperature}
             humidity={sensor.reading?.humidity}
