@@ -4,10 +4,10 @@ import { SensorCard } from "../../ui/components/sensor-card";
 
 export const sensorWebRoutes = new Hono();
 
-sensorWebRoutes.get('/:id/readings/latest', async (c) => {
+sensorWebRoutes.get("/:id/readings/latest", async (c) => {
   const deviceId = c.req.param("id");
 
-   const rows = await db`
+  const rows = await db`
     SELECT *
     FROM sensor_readings
     WHERE device_id = ${deviceId}
@@ -15,20 +15,18 @@ sensorWebRoutes.get('/:id/readings/latest', async (c) => {
     LIMIT 1
   `;
   const sensor = rows[0];
-	return c.html(<SensorCard {...sensor} />)
-})
+  return c.html(<SensorCard {...sensor} />);
+});
 
+sensorWebRoutes.get("/:id/readings", async (c) => {
+  const deviceId = c.req.param("id");
 
-
-sensorWebRoutes.get('/:id/readings', async(c) => {
-	const deviceId = c.req.param("id");
-
-	 const rows = await db`
+  const rows = await db`
     SELECT *
     FROM sensor_readings
     WHERE device_id = ${deviceId}
     ORDER BY created_at DESC
     LIMIT 100
   `;
-	return c.json(rows)
-})
+  return c.json(rows);
+});

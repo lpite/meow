@@ -20,3 +20,19 @@ await db`
     created_at TEXT DEFAULT CURRENT_TIMESTAMP
   )
 `;
+
+await db`
+  CREATE TABLE IF NOT EXISTS robots (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP
+  )
+`;
+
+await db`
+  CREATE TABLE IF NOT EXISTS ventilations (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP
+  )
+`;
