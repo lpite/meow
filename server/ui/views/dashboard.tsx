@@ -9,9 +9,7 @@ export function DashboardPage({ sensors }: DashboardPageProps) {
     <Layout>
       <h1 class="text-white text-xl pb-2">Dashboard</h1>
 
-      <div class="grid grid-cols-4 gap-3">
-        
-      </div>
+      <div class="grid grid-cols-4 gap-3"></div>
     </Layout>
   );
 }

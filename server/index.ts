@@ -12,7 +12,6 @@ app.route("/api/", api);
 app.route("", views);
 app.use("/static/*", serveStatic({ root: "./" }));
 
-
 Bun.serve({
   fetch: app.fetch,
   port: 3000,

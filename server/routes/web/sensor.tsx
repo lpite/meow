@@ -7,7 +7,7 @@ export const sensorWebRoutes = new Hono();
 sensorWebRoutes.get("/:id/readings/latest", async (c) => {
   const deviceId = c.req.param("id");
 
- const rows = await db`
+  const rows = await db`
   SELECT 
     s.id,
     s.name,

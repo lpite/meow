@@ -43,14 +43,14 @@ views.get("/sensors", async (c) => {
 });
 
 views.get("/robots", async (c) => {
-  const robots = await db`select * from robots;`
+  const robots = await db`select * from robots;`;
 
   return c.html(<RobotsPage robots={robots} />);
 });
 
 views.get("/ventilations", async (c) => {
-  const ventilations = await db`select * from ventilations;`
-  
+  const ventilations = await db`select * from ventilations;`;
+
   return c.html(<VentilationsPage ventilations={ventilations} />);
 });
 

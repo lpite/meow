@@ -4,7 +4,7 @@ import { SensorCard } from "../components/sensor-card";
 type SensorsPageProps = {
   sensors: {
     id: string;
-    name:string;
+    name: string;
     reading: {
       temperature: number;
       air_quality: number;

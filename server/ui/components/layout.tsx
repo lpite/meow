@@ -10,7 +10,9 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
       </head>
       <body class="p-4 bg-gray-800 flex flex-col items-center">
         <NavBar />
-        <div id="container" class="max-w-5xl w-full">{children}</div>
+        <div id="container" class="max-w-5xl w-full">
+          {children}
+        </div>
       </body>
     </html>
   );

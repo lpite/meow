@@ -12,7 +12,9 @@ export function RobotsPage({ robots }: RobotsPageProps) {
     <Layout>
       <h1 class="text-white text-xl pb-2">Robots</h1>
       <div class="grid grid-cols-4 gap-3 w-full">
-        {robots.map((robot)=><RobotCard {...robot} batteryLevel={40} status="Working" />)}
+        {robots.map((robot) => (
+          <RobotCard {...robot} batteryLevel={40} status="Working" />
+        ))}
       </div>
     </Layout>
   );
