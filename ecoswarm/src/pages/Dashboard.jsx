@@ -6,7 +6,7 @@ import {
   PointElement, LineElement, DoughnutController, LineController,
   ArcElement, Filler, Tooltip,
 } from 'chart.js';
-import { api } from '../api/mockApi';
+import { api } from '../api/api';
 import { StatusBadge } from '../components/ui';
 
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement,

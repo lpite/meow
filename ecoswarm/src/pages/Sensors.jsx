@@ -6,7 +6,7 @@ import {
   PointElement, LineElement, LineController,
   Filler, Tooltip,
 } from 'chart.js';
-import { api } from '../api/mockApi';
+import { api } from '../api/api';
 import { StatusBadge, BatteryIcon, SignalIcon, BackButton, SensorSVG } from '../components/ui';
 
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement, LineController, Filler, Tooltip);

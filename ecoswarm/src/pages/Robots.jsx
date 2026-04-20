@@ -5,7 +5,7 @@ import {
   Chart, CategoryScale, LinearScale,
   BarElement, BarController, Tooltip,
 } from 'chart.js';
-import { api } from '../api/mockApi';
+import { api } from '../api/api';
 import { StatusBadge, BatteryIcon, BackButton, MetricCard, RobotSVG } from '../components/ui';
 
 Chart.register(CategoryScale, LinearScale, BarElement, BarController, Tooltip);
