@@ -131,7 +131,7 @@ function ActivityTable({ rows }) {
       <table style={{ width: '100%', borderCollapse: 'collapse' }}>
         <thead>
           <tr style={{ borderBottom: '1px solid #222' }}>
-            {['Manager','Date','Work time','Status'].map(h => (
+            {['Robot','Date','Work time','Status'].map(h => (
               <th key={h} style={{ textAlign: 'left', padding: '8px 12px', fontSize: 11, color: '#555', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{h}</th>
             ))}
           </tr>

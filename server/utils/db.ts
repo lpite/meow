@@ -38,6 +38,16 @@ await db`
 `;
 
 await db`
+  CREATE TABLE IF NOT EXISTS robot_tasks (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  robot_id integer REFERENCES robots(id),
+  start_time TEXT DEFAULT CURRENT_TIMESTAMP,
+  end_time TEXT,
+  status TEXT DEFAULT 'In Progress'
+  )
+`;
+
+await db`
   CREATE TABLE IF NOT EXISTS ventilations (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL,
