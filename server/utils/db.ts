@@ -3,6 +3,17 @@ import { SQL } from "bun";
 export const db = new SQL("sqlite://../shittyyyyy.db");
 
 await db`
+  CREATE TABLE IF NOT EXISTS sensors (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    status text DEFAULT 'offline',
+    battery_level integer DEFAULT 0,
+    firmware_version text DEFAULT '0.0.1'
+  )
+`;
+
+await db`
   CREATE TABLE IF NOT EXISTS sensor_readings (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     device_id TEXT NOT NULL,
@@ -14,18 +25,15 @@ await db`
 `;
 
 await db`
-  CREATE TABLE IF NOT EXISTS sensors (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-	name TEXT NOT NULL,
-    created_at TEXT DEFAULT CURRENT_TIMESTAMP
-  )
-`;
-
-await db`
   CREATE TABLE IF NOT EXISTS robots (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL,
-    created_at TEXT DEFAULT CURRENT_TIMESTAMP
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+  status TEXT DEFAULT 'offline',
+  battery_level INTEGER DEFAULT 0,
+  meters_covered integer DEFAULT 0,
+  firmware_version text DEFAULT '0.0.1',
+  total_tasks integer DEFAULT 0
   )
 `;
 
