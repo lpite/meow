@@ -15,6 +15,9 @@ mockSensorsApiRoutes.get("/", async (c) => {
   SELECT 
     s.id,
     s.name,
+    s.battery_level,
+    s.firmware_version,
+    s.status,
     json_object(
       'temperature', sr.temperature,
       'humidity', sr.humidity,
@@ -108,8 +111,10 @@ mockSensorsApiRoutes.get("/", async (c) => {
       },
     };
   });
+  console.log(sensors)
   return c.json(
     sensors.map((el) => {
+      console.log(el)
       const readings = JSON.parse(el.reading);
       return {
         ...el,

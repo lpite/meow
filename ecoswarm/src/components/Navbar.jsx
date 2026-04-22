@@ -1,8 +1,15 @@
 // components/Navbar.jsx
 
 import React from 'react';
+import { useRoute, Link } from 'wouter';
 
-export default function Navbar({ page, setPage }) {
+const routes = [
+  { name: 'Dashboard', path: '/' },
+  { name: 'Robots', path: '/robots' },
+  { name: 'Sensors', path: '/sensors' },
+];
+
+export default function Navbar() {
   return (
     <nav style={{
       display: 'flex', alignItems: 'center',
@@ -15,21 +22,8 @@ export default function Navbar({ page, setPage }) {
       </span>
 
       <div style={{ display: 'flex', gap: 4 }}>
-        {['Dashboard', 'Robots', 'Sensors'].map(p => (
-          <button
-            key={p}
-            onClick={() => setPage(p)}
-            style={{
-              background: page === p ? '#1e1e24' : 'transparent',
-              border: 'none', cursor: 'pointer',
-              padding: '8px 18px', borderRadius: 8,
-              fontSize: 14, fontWeight: page === p ? 600 : 400,
-              color: page === p ? '#fff' : '#666',
-              transition: 'all 0.15s',
-            }}
-          >
-            {p}
-          </button>
+        {routes.map(({ name, path }) => (
+          <NavbarLink key={path} name={name} path={path} />
         ))}
       </div>
 
@@ -45,5 +39,24 @@ export default function Navbar({ page, setPage }) {
         <span style={{ fontSize: 13, color: '#888' }}>username</span>
       </div>
     </nav>
+  );
+}
+
+function NavbarLink({ name, path }) {
+  const [isActive] = useRoute(path);
+  return (
+    <Link href={path}>
+      <a style={{
+        background: isActive ? '#1e1e24' : 'transparent',
+        border: 'none', cursor: 'pointer',
+        padding: '8px 18px', borderRadius: 8,
+        fontSize: 14, fontWeight: isActive ? 600 : 400,
+        color: isActive ? '#fff' : '#666',
+        transition: 'all 0.15s',
+        textDecoration: 'none',
+      }}>
+        {name}
+      </a>
+    </Link>
   );
 }

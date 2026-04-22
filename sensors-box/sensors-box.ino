@@ -1,17 +1,21 @@
-#include <WiFiS3.h>
+#include <WiFi.h>
 #include <DHT11.h>
 #include "env.h"
 
-#define DHTPIN 2
-#define MQ135PIN A0
+#define DHTPIN 27
+#define MQ135PIN 34
 
 DHT11 dht11(DHTPIN);
 WiFiClient client;
 
 void connectWiFi() {
   Serial.print("Connecting to WiFi");
+  
+  // 1. Call begin() exactly ONCE
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 
-  while (WiFi.begin(WIFI_SSID, WIFI_PASSWORD) != WL_CONNECTED) {
+  // 2. Check the STATUS in the loop, do not call begin() again
+  while (WiFi.status() != WL_CONNECTED) {
     Serial.print(".");
     delay(1000);
   }
@@ -62,8 +66,14 @@ void sendSensorData(int temperature, int humidity, int airQuality) {
 }
 
 void setup() {
-  Serial.begin(9600);
-
+  Serial.begin(115200);
+  
+  // 1. Set to Station mode (client)
+  WiFi.mode(WIFI_STA);
+  
+  // 2. Disconnect to clear any saved, currently-connecting states
+  WiFi.disconnect(true);
+  delay(100);
   // Better ADC precision for Uno R4
   analogReadResolution(12);
 

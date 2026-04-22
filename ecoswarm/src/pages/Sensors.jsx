@@ -196,7 +196,12 @@ export default function Sensors() {
   const [filter, setFilter]     = useState('all');
   const [selected, setSelected] = useState(null);
 
-  useEffect(() => { api.getSensors().then(setSensors); }, []);
+  useEffect(() => {
+    const fetchSensors = () => api.getSensors().then(setSensors);
+    fetchSensors();
+    const interval = setInterval(fetchSensors, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   if (selected) return <SensorDetail sensor={selected} onBack={() => setSelected(null)} />;
 
