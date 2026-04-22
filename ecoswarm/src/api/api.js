@@ -1,26 +1,19 @@
-// mockApi.js — swap these with real fetch() calls when your backend is ready
-
-const wave = (base, amp, seed, len = 24) =>
-  Array.from({ length: len }, (_, i) =>
-    parseFloat((base + Math.sin((i + seed) / 3.5) * amp).toFixed(1))
-  );
-
 export const api = {
   getSensorAggregates: () =>
     fetch('http://localhost:3000/api/sensor/aggregates')
       .then(response => response.json()),
 
-  getSensorTrend24h: () => {
+  getSensorTrend24h: async () => {
     const hours = Array.from({ length: 24 }, (_, i) => {
       const h = (new Date().getHours() - 23 + i + 24) % 24;
       return `${String(h).padStart(2, '0')}:00`;
     });
-    return fetch('http://localhost:3000/api/sensor/trend24h')
-      .then(response => response.json())
-      .then(data => ({
-        labels: hours,
-        datasets: data.datasets || [],
-      }));
+    const response = await fetch('http://localhost:3000/api/sensor/trend24h');
+    const data = await response.json();
+    return ({
+      labels: hours,
+      datasets: data.datasets || [],
+    });
   },
 
   getRecentActivity: () =>
