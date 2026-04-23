@@ -21,7 +21,6 @@ api.route("/robots", robotsApiRoutes);
 api.route("/sensors", mockSensorsApiRoutes);
 api.route("/sensor/aggregates", sensorAggregatesRoutes);
 api.route("/sensor/trend24h", sensorTrend24hRoutes);
-
 app.route("/api/", api);
 app.use("/static/*", serveStatic({ root: "./" }));
 

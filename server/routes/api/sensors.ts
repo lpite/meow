@@ -22,7 +22,7 @@ mockSensorsApiRoutes.get("/", async (c) => {
       'temperature', sr.temperature,
       'humidity', sr.humidity,
       'air_quality', sr.air_quality,
-      'created_at', sr.created_at
+      'created_at', datetime(sr.created_at,'localtime')
     ) AS reading
   FROM sensors s
   LEFT JOIN sensor_readings sr
@@ -111,16 +111,19 @@ mockSensorsApiRoutes.get("/", async (c) => {
       },
     };
   });
-  console.log(sensors)
+
   return c.json(
     sensors.map((el) => {
-      console.log(el)
       const readings = JSON.parse(el.reading);
+      const lastReadingTime = new Date(readings.created_at).getTime();
+
       return {
         ...el,
         installDate: el.created_at,
         firmwareVersion: el.firmware_version,
-        battery: el.battery_level,
+        battery: new Date().getTime() - lastReadingTime > 10000 ? 0 : 100,
+        status:
+          new Date().getTime() - lastReadingTime > 10000 ? "offline" : "online",
         sector: "Sector A",
         readings: [
           {
@@ -142,7 +145,7 @@ mockSensorsApiRoutes.get("/", async (c) => {
             value: readings.air_quality,
             unit: "ppm",
             color: "#a3e635",
-            status:"warning",
+            status: "warning",
           },
         ],
         trend24h: {
@@ -161,6 +164,30 @@ mockSensorsApiRoutes.get("/", async (c) => {
 // GET /api/mock/sensors/:id - Get sensor by ID (mock data)
 mockSensorsApiRoutes.get("/:id", async (c) => {
   const id = parseInt(c.req.param("id"));
+   const sensor = await db`
+  SELECT 
+    s.id,
+    s.name,
+    s.battery_level,
+    s.firmware_version,
+    s.status,
+    json_object(
+      'temperature', sr.temperature,
+      'humidity', sr.humidity,
+      'air_quality', sr.air_quality,
+      'created_at', datetime(sr.created_at,'localtime')
+    ) AS reading
+  FROM sensors s
+  LEFT JOIN sensor_readings sr
+    ON sr.device_id = s.id
+   AND sr.created_at = (
+      SELECT MAX(created_at)
+      FROM sensor_readings
+      WHERE device_id = s.id
+   )
+  where s.id = ${id}
+`;
+
   const sensors = Array.from({ length: 12 }, (_, i) => {
     const statuses = [
       "active",
@@ -217,7 +244,7 @@ mockSensorsApiRoutes.get("/:id", async (c) => {
           unit: "ppm",
           color: "#a3e635",
           status: i === 9 ? "warning" : "normal",
-        }
+        },
       ],
 
       trend24h: {
@@ -273,7 +300,7 @@ mockSensorsApiRoutes.get("/:id", async (c) => {
     };
   });
 
-  const sensor = sensors.find((s) => s.id === id);
+  // const sensor = sensors.find((s) => s.id === id);
   if (!sensor) {
     return c.notFound();
   }

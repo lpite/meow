@@ -182,3 +182,8 @@ robotsApiRoutes.get("/:id", async (c) => {
   }
   return c.json(robot);
 });
+
+robotsApiRoutes.get("/:id/status", async (c) => {
+  
+  return c.text("CLEAN")
+})
